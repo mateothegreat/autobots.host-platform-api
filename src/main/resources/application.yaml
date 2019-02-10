@@ -1,0 +1,27 @@
+server:
+  port: 10083
+
+spring:
+  data:
+    rest:
+      detection-strategy: explicit_method_annotated
+  jpa:
+    show-sql: ${DEBUG:false}
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        format_sql: ${DEBUG:false}
+
+    hibernate:
+      ddl-auto: ${DDL_AUTO:update}
+
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:6603}/${MYSQL_DATABASE:autobots}?allowPublicKeyRetrieval=true&reconnect=true&verifyServerCertificate=false&useSSL=false
+    username: ${MYSQL_USER:root}
+    password: ${MYSQL_PASS:mysql}
+
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+      WRITE_DATES_AS_TIMESTAMPS: false
