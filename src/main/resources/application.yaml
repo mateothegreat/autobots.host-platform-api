@@ -25,3 +25,9 @@ spring:
     serialization:
       fail-on-empty-beans: false
       WRITE_DATES_AS_TIMESTAMPS: false
+
+  rabbitmq:
+    host: ${RABBITMQ_HOST:localhost}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USER:guest}
+    password: ${RABBITMQ_PASS:guest}

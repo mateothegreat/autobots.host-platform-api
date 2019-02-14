@@ -40,8 +40,8 @@ dependencies {
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-rest'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-security'
-//    compile group: 'org.springframework.boot', name: 'spring-boot-starter-amqp'
-//    compile group: 'org.springframework.boot', name: 'spring-boot-starter-websocket'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-amqp'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-websocket'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-log4j2'
     compile group: 'org.springframework.security', name: 'spring-security-messaging'
 
@@ -59,6 +59,8 @@ dependencies {
     compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.4")
 
     compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.7.0'
+
+    compile 'org.javacord:javacord:3.0.3'
 
     testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
     testCompile group: 'io.rest-assured', name: 'rest-assured', version: '3.0.5'

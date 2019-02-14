@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: $APP
+  labels:
+    app: $APP
+spec:
+  selector:
+    matchLabels:
+      app: $APP
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  minReadySeconds: 5
+  template:
+    metadata:
+      labels:
+        app: $APP
+    spec:
+      containers:
+        - image: $IMAGE
+          name: $APP
+          imagePullPolicy: Always
+          ports:
+            - containerPort: $PORT
+              name: http
+          env:
+            - name: DEBUG
+              value: "$DEBUG"
+            - name: PORT
+              value: "$PORT"
+            - name: MYSQL_HOST
+              value: "$MYSQL_HOST"
+            - name: MYSQL_PORT
+              value: "$MYSQL_PORT"
+            - name: MYSQL_DATABASE
+              value: "$MYSQL_DATABASE"
+            - name: MYSQL_USER
+              value: "$MYSQL_USER"
+            - name: MYSQL_PASS
+              value: "$MYSQL_PASS"
+          readinessProbe:
+            httpGet:
+              path: /monitoring/is_alive
+              port: $PORT
+            initialDelaySeconds: 45
+            timeoutSeconds: 5
+            periodSeconds: 1
+          livenessProbe:
+            httpGet:
+              path: /monitoring/is_alive
+              port: $PORT
+            initialDelaySeconds: 45
+            timeoutSeconds: 5
+            periodSeconds: 5
+#          resources:
+#            limits:
+#              cpu: "500m"
+#              memory: 512Mi

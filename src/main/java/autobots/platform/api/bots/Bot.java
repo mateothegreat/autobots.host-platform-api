@@ -1,11 +1,14 @@
 package autobots.platform.api.bots;
 
+import autobots.platform.api.bots.environment.BotEnvironment;
+import autobots.platform.api.common.Status;
 import autobots.platform.api.users.User;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -23,10 +26,13 @@ public class Bot {
     private UUID uuid;
     private UUID token;
 
-    private BotStatus status;
+    private Status status;
 
     @OneToOne
     private User user;
+
+    @OneToMany
+    private List<BotEnvironment> environments;
 
     private String name;
     private String description;
