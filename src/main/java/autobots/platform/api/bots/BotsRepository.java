@@ -14,6 +14,6 @@ public interface BotsRepository extends PagingAndSortingRepository<Bot, Long> {
 
     Page<Bot> getByUser(User user, Pageable pageable);
 
-    Optional<Bot> getByUuid(UUID uuid);
+    Optional<Bot> getByUuidAndUser(UUID uuid, User user);
 
 }

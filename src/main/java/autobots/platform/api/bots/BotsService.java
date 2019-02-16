@@ -26,7 +26,6 @@ public class BotsService {
 
     public Page<Bot> getPageableByPrincipalUser(Pageable pageable, Principal principal) {
 
-
         Optional<User> optionalUser = usersService.getPrincipalUser(principal);
 
         if (optionalUser.isPresent()) {
@@ -36,6 +35,20 @@ public class BotsService {
         }
 
         return Page.empty();
+
+    }
+
+    public Optional<Bot> getByUUIDandPrincipal(UUID uuid, Principal principal) {
+
+        Optional<User> optionalUser = usersService.getPrincipalUser(principal);
+
+        if (optionalUser.isPresent()) {
+
+            return botsRepository.getByUuidAndUser(uuid, optionalUser.get());
+
+        }
+
+        return Optional.empty();
 
     }
 
