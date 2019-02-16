@@ -39,6 +39,15 @@ public class BotsController {
 
     }
 
+    @DeleteMapping(value = Patterns.UUIDv4)
+    public ResponseEntity<Boolean> deleteByUUIDandPrincipal(@PathVariable("uuid") UUID uuid, Principal principal) {
+
+        botsService.deleteByUUIDandPrincipal(uuid, principal);
+
+        return new ResponseEntity<>(true, HttpStatus.OK);
+
+    }
+
     @PostMapping
     public ResponseEntity<Bot> create(@RequestBody Bot createBot, Principal principal) {
 

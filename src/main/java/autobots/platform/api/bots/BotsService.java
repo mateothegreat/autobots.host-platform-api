@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.security.Principal;
 import java.util.Optional;
 import java.util.UUID;
@@ -49,6 +50,23 @@ public class BotsService {
         }
 
         return Optional.empty();
+
+    }
+
+    @Transactional
+    public boolean deleteByUUIDandPrincipal(UUID uuid, Principal principal) {
+
+        Optional<User> optionalUser = usersService.getPrincipalUser(principal);
+
+        if (optionalUser.isPresent()) {
+
+            botsRepository.deleteByUuidAndUser(uuid, optionalUser.get());
+
+            return true;
+
+        }
+
+        return false;
 
     }
 

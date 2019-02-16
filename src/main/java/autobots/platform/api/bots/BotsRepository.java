@@ -16,4 +16,6 @@ public interface BotsRepository extends PagingAndSortingRepository<Bot, Long> {
 
     Optional<Bot> getByUuidAndUser(UUID uuid, User user);
 
+    int deleteByUuidAndUser(UUID uuid, User user);
+
 }
