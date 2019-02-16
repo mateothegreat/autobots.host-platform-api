@@ -1,10 +1,10 @@
 include .make/Makefile.inc
 
 VERSION			= $(shell git rev-parse HEAD)
-APP				= k8exam-platform-api
+APP				= autobots-platform-api
 IMAGE			= gcr.io/matthewdavis-devops/$(APP):$(VERSION)
 NS				= default
-PORT			= 10082
+PORT			= 10083
 
 .PHONY: all build test tag_latest release
 
