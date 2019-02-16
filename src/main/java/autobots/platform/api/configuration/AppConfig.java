@@ -17,7 +17,7 @@ public class AppConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
 
-                registry.addMapping("/**").allowedMethods("GET", "POST", "PUT", "DELETE").allowedOrigins("https://autobots.host", "https://admin.autobots.host", "https://k8qs.com", "http://localhost:4200", "http://localhost:4203").allowedHeaders("*");
+                registry.addMapping("/**").allowedMethods("GET", "POST", "PUT", "DELETE").allowedOrigins("https://autobots.host", "https://admin.autobots.host", "https://app.autobots.host", "http://localhost:4200", "http://localhost:4203").allowedHeaders("*");
 
             }
 
