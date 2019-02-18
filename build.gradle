@@ -43,9 +43,13 @@ dependencies {
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-amqp'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-websocket'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-log4j2'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-reactor-netty', version: '2.1.2.RELEASE'
+    compile group: 'io.projectreactor.ipc', name: 'reactor-netty', version: '0.7.14.RELEASE'
+
     compile group: 'org.springframework.security', name: 'spring-security-messaging'
 
     compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.4'
+
     annotationProcessor 'org.projectlombok:lombok:1.18.4'
 
     configurations {
