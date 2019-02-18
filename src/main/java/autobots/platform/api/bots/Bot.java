@@ -38,8 +38,9 @@ public class Bot {
     @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<BotEnvironment> environments;
 
-    private String name;
-    private String description;
-    private String gitUrl;
+    private BotImage image;
+    private String   name;
+    private String   description;
+    private String   gitUrl;
 
 }

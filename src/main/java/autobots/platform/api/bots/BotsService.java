@@ -1,5 +1,7 @@
 package autobots.platform.api.bots;
 
+import autobots.platform.api.messaging.Message;
+import autobots.platform.api.messaging.MessagingService;
 import autobots.platform.api.users.User;
 import autobots.platform.api.users.UsersService;
 import org.springframework.data.domain.Page;
@@ -16,12 +18,14 @@ public class BotsService {
 
     private final BotsRepository botsRepository;
 
-    private final UsersService usersService;
+    private final UsersService     usersService;
+    private final MessagingService messagingService;
 
-    public BotsService(final BotsRepository botsRepository, final UsersService usersService) {
+    public BotsService(final BotsRepository botsRepository, final UsersService usersService, final MessagingService messagingService) {
 
         this.botsRepository = botsRepository;
         this.usersService = usersService;
+        this.messagingService = messagingService;
 
     }
 
@@ -80,6 +84,55 @@ public class BotsService {
             bot.setUuid(UUID.randomUUID());
 
             return Optional.of(botsRepository.save(bot));
+
+        }
+
+        return Optional.empty();
+
+    }
+
+    public Optional<Bot> update(UUID uuid, Bot bot, Principal principal) {
+
+        Optional<User> optionalUser = usersService.getPrincipalUser(principal);
+
+        if (optionalUser.isPresent()) {
+
+            Optional<Bot> optionalBot = botsRepository.getByUuidAndUser(uuid, optionalUser.get());
+
+            if (optionalBot.isPresent()) {
+
+                optionalBot.get().setName(bot.getName());
+                optionalBot.get().setDescription(bot.getDescription());
+                optionalBot.get().setGitUrl(bot.getGitUrl());
+                optionalBot.get().setImage(bot.getImage());
+                optionalBot.get().setStatus(bot.getStatus());
+                optionalBot.get().setEnvironments(bot.getEnvironments());
+
+                return Optional.of(botsRepository.save(optionalBot.get()));
+
+            }
+
+        }
+
+        return Optional.empty();
+
+    }
+
+    public Optional<Boolean> deployByUUID(UUID uuid, Principal principal) {
+
+        Optional<User> optionalUser = usersService.getPrincipalUser(principal);
+
+        if (optionalUser.isPresent()) {
+
+            Optional<Bot> optionalBot = botsRepository.getByUuidAndUser(uuid, optionalUser.get());
+
+            if (optionalBot.isPresent()) {
+
+                messagingService.send(new Message<>(optionalBot.get().getUuid(), "deploy", new BotDeploy(optionalBot.get().getUuid(), optionalBot.get().getGitUrl(), optionalBot.get().getEnvironments())));
+
+                return Optional.of(true);
+
+            }
 
         }
 

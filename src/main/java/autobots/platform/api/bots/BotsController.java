@@ -48,12 +48,30 @@ public class BotsController {
 
     }
 
+    @PostMapping(value = Patterns.UUIDv4)
+    public ResponseEntity<Bot> update(@PathVariable("uuid") UUID uuid, @RequestBody Bot createBot, Principal principal) {
+
+        Optional<Bot> optionalBot = botsService.update(uuid, createBot, principal);
+
+        return optionalBot.map(bot -> new ResponseEntity<>(bot, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.BAD_REQUEST));
+
+    }
+
     @PostMapping
     public ResponseEntity<Bot> create(@RequestBody Bot createBot, Principal principal) {
 
         Optional<Bot> optionalBot = botsService.create(createBot, principal);
 
         return optionalBot.map(bot -> new ResponseEntity<>(bot, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.BAD_REQUEST));
+
+    }
+
+    @PostMapping("/{uuid:[0-9a-fxA-FX]{8}-[0-9a-fxA-FX]{4}-[0-9a-fxA-FX]{4}-[0-9a-fxA-FX]{4}-[0-9a-fxA-FX]{12}}/deploy")
+    public ResponseEntity<Boolean> deploy(@PathVariable("uuid") UUID uuid, Principal principal) {
+
+        Optional<Boolean> optionalBoolean = botsService.deployByUUID(uuid, principal);
+
+        return optionalBoolean.map(b -> new ResponseEntity<>(true, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
 
     }
 
